@@ -1,6 +1,7 @@
 package Asg2;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,11 +16,18 @@ public class Main {
 		//read from file and fill list
 		for(Alarm alarm : alarms)
 		{
-			LocalDateTime dateTime = LocalDateTime.now();
+			LocalDateTime now = LocalDateTime.now();
 			LocalDateTime alarmStopTime = alarm.getStopTime();
-			if(alarmStopTime.isBefore(dateTime))
+			//will display alarms that went off while program was off, or reset their timers
+			if(alarmStopTime.isBefore(now))
 			{
 				alarm.triggerAlarm();
+			}
+			else
+			{
+				int time = (int) (now.until(alarmStopTime, ChronoUnit.SECONDS));
+				alarm.setTime(time);
+				alarm.startTimer();
 			}
 		}
 	}
@@ -46,8 +54,17 @@ public class Main {
 	}
 
 	// Kevin
-	public static void removeAlarm(Alarm alarm, ArrayList<Alarm> alarms) {
-		
+	public static void removeAlarm(ArrayList<Alarm> alarms) {
+		LocalDateTime now = LocalDateTime.now();
+		for(Alarm alarm : alarms)
+		{
+			if(alarm.getStopTime().isBefore(now))
+			{
+				//null alarms should not be written to the xml instance. 
+				//They will be deleted because they wont be read back in.
+				alarm.equals(null);
+			}
+		}
 	}
 
 	public static void main(String[] args) {
