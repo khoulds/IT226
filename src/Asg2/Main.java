@@ -11,8 +11,17 @@ public class Main {
 	public ArrayList<Alarm> alarms = new ArrayList<Alarm>();
 
 	// Kevin/Randy
-	public static void initiateAll() {
-
+	public static void initiateAll(ArrayList<Alarm> alarms) {
+		//read from file and fill list
+		for(Alarm alarm : alarms)
+		{
+			LocalDateTime dateTime = LocalDateTime.now();
+			LocalDateTime alarmStopTime = alarm.getStopTime();
+			if(alarmStopTime.isBefore(dateTime))
+			{
+				alarm.triggerAlarm();
+			}
+		}
 	}
 
 	// Matt
@@ -21,8 +30,9 @@ public class Main {
 	}
 
 	// Kevin
-	public static void addAlarm(LocalDateTime endDT) {
-
+	public static void addAlarm(ArrayList<Alarm> alarms, Alarm alarm) {
+		alarms.add(alarm);
+		alarm.startTimer();
 	}
 
 	// Randy
@@ -36,8 +46,8 @@ public class Main {
 	}
 
 	// Kevin
-	public static void removeAlarm() {
-
+	public static void removeAlarm(Alarm alarm, ArrayList<Alarm> alarms) {
+		
 	}
 
 	public static void main(String[] args) {
@@ -50,7 +60,6 @@ public class Main {
 		 } else {
 		 System.out.println("is before");
 		 }
-		 System.out.println(then);
 
 //		Timer timer = new Timer();
 //		Alarm alarm = new Alarm();
