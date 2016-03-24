@@ -34,7 +34,7 @@ public class Alarm {
 		this.message = message;
 		this.stopTime = stopTime;
 		LocalDateTime now = LocalDateTime.now();
-		int time = (int) (now.until(stopTime, ChronoUnit.MILLIS ));
+		int time = (int) (now.until(stopTime, ChronoUnit.SECONDS));
 		this.time = time;
 	}
 	
@@ -45,7 +45,7 @@ public class Alarm {
 	
 	// Kevin
 	public void snooze() {
-		this.time = (int)(.06);
+		this.time = (int)(60);
 		this.startTimer();
 		numSnoozes++;
 	}
