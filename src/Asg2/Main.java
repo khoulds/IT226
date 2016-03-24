@@ -62,7 +62,7 @@ public class Main {
 			{
 				//null alarms should not be written to the xml instance. 
 				//They will be deleted because they wont be read back in.
-				alarm.equals(null);
+				alarm = null;
 			}
 		}
 	}
